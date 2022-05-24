@@ -1,0 +1,11 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+    <div class="container">
+        {% for post in posts %}
+            {% include 'base/components/post_component.html' with user=post.user text=post.text %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

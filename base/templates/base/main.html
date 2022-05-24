@@ -14,17 +14,16 @@
     </head>
 <body>
 
-    {% include 'base/navbar_component.html' %}
-    {% include 'base/searchbar_component.html' %}
-
-    <!--<img src="{% static 'images/CoolOcean.png' %}" /> -->
+    {% include 'base/components/navbar_component.html' %}
+    {% include 'base/components/searchbar_component.html' %}
 
     {% block content %}
 
-
     {% endblock %}
 
-    {% include 'base/footer.html' %}
+    {% include 'base/components/footer_component.html' %}
     
 </body>
 </html>
+
+    <!--<img src="{% static 'images/CoolOcean.png' %}" /> -->
