@@ -2,17 +2,13 @@
 
 {% block content %}
     <body>
-        <!-- Page content-->
         <div class="container">
             <div class="row">
-                <!-- Main content - posts -->
                 <div class="col-lg-8">
-                    {% include 'base/components/post_component.html' with user='Thomas - posted 3 hours ago' text='Lorem ipsum dolor sit amet, consectetur adipisicing elit' %}
-                    {% include 'base/components/post_component.html' with user='Henry - posted 4 hours ago' text='Lorem ipsum dolor sit amet, consectetur adipisicing elit' %}
-                    {% include 'base/components/post_component.html' with user='User - posted 15 hours ago' text='Lorem ipsum dolor sit amet, consectetur adipisicing elit' %}
-
+                    {% for post in posts %} 
+                        {% include 'base/components/post_component.html' with header=post.header body=post.body %}
+                    {% endfor %}
                 </div>
-                <!-- Side widgets-->
                 <div class="col-lg-4">
                     {% include 'base/widget_component/widget_body_component.html' with header='Higest rated post' body='Coke VS Pepsi!!??' %}
                     {% include 'base/widget_component/widget_body_component.html' with header='Trending' body='Sunny or rainy today?' %}
