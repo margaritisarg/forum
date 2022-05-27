@@ -30,7 +30,14 @@ def logoutUser(request):
 
 def home(request):
     posts = Post.objects.all()
-    context = {'posts': posts}
+    username = request.user.username
+    user_id = request.user.id 
+    
+    if username is None and user_id is None:
+        username = "NoUserName"
+        user_id = 0
+        
+    context = {'posts': posts, 'username': username, 'user_id': user_id}
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')
