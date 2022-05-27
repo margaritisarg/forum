@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import Post
 
 def loginPage(request):
@@ -32,6 +33,7 @@ def home(request):
     context = {'posts': posts}
     return render(request, 'base/home.html', context)
 
+@login_required(login_url='login')
 def post(request):
     posts = Post.objects.all()
     context = {'posts': posts}
