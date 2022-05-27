@@ -36,14 +36,18 @@ def home(request):
     if username is None and user_id is None:
         username = "NoUserName"
         user_id = 0
-        
+
     context = {'posts': posts, 'username': username, 'user_id': user_id}
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')
 def post(request):
-    posts = Post.objects.all()
-    context = {'posts': posts}
+    #posts = Post.objects.all()
+    user_id = request.user.id 
+    username = request.user.username
+    posts = Post.objects.filter(user_id=user_id)
+
+    context = {'posts': posts, 'user_id': user_id, 'username': username}
     return render(request, 'base/post.html', context)
 
 

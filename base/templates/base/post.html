@@ -3,9 +3,12 @@
 {% block content %}
 
     <div class="container">
-        {% for post in posts %} 
-            {% include 'base/components/post_component.html' with header=post.header body=post.body %}
-        {% endfor %}
+        <h1> {{user_id}} {{username}}</h1>
+        {% if posts is not None %}
+            {% for post in posts %} 
+                {% include 'base/components/post_component.html' with header=post.header body=post.body %}
+            {% endfor %}
+        {% endif %}
     </div>
 
 {% endblock %}
