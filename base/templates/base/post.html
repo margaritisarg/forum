@@ -2,11 +2,12 @@
 
 {% block content %}
 
+    <div class="container"> {{user_id}}  {{username}}</div>
+    
     <div class="container">
-        <h1> {{user_id}} {{username}}</h1>
-        {% if posts is not None %}
-            {% for post in posts %} 
-                {% include 'base/components/post_component.html' with header=post.header body=post.body %}
+        {% if results_list is not None %}
+            {% for result in results_list %} 
+                {% include 'base/components/post_component.html' with resultsList=result %}
             {% endfor %}
         {% endif %}
     </div>

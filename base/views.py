@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post
+from django.db import connection, connections
+from .classes.table_joins import Post_joined_user
 
 def loginPage(request):
     if request.method == "POST":
@@ -42,14 +44,50 @@ def home(request):
 
 @login_required(login_url='login')
 def post(request):
-    #posts = Post.objects.all()
     user_id = request.user.id 
     username = request.user.username
-    posts = Post.objects.filter(user_id=user_id)
 
-    context = {'posts': posts, 'user_id': user_id, 'username': username}
+    cursor = connection.cursor()
+    cursor.execute(f"SELECT  a.[username], b.[header], b.[body] FROM ( SELECT [header], [body], [user_id] FROM base_post WHERE user_id = {user_id} ) b INNER JOIN auth_user a ON b.user_id = a.id")
+    results = cursor.fetchall()
+
+    results_list = []
+    for result in results:
+        post_joined_user = Post_joined_user()
+        post_joined_user.user = result[0]
+        post_joined_user.header = result[1]
+        post_joined_user.body = result[2]
+        results_list.append(post_joined_user)
+
+    context = {'user_id': user_id, 'username': username, 'results_list': results_list}
     return render(request, 'base/post.html', context)
 
+
+
+
+
+
+
+"""
+    query = Post.objects.select_related('user').filter(user__id__iexact=1)
+
+    print()
+    print()
+    print(type(query))
+    print(query)
+    print(type(query))
+    print(query.query)
+    print()
+
+    for e in query.all():
+        print(e)
+        #print(e.auth_useris_active)
+
+    print()
+    print()
+
+
+"""
 
 
 
