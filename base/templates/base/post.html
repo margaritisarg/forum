@@ -5,9 +5,9 @@
     <div class="container"> {{user_id}}  {{username}}</div>
     
     <div class="container">
-        {% if results_list is not None %}
-            {% for result in results_list %} 
-                {% include 'base/components/post_component.html' with resultsList=result %}
+        {% if posts is not None %}
+            {% for post in posts %} 
+                {% include 'base/components/post_component.html' with resultsList=post %}
             {% endfor %}
         {% endif %}
     </div>

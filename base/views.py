@@ -60,7 +60,7 @@ def post(request):
         post_joined_user.body = result[2]
         results_list.append(post_joined_user)
 
-    context = {'user_id': user_id, 'username': username, 'results_list': results_list}
+    context = {'user_id': user_id, 'username': username, 'posts': results_list}
     return render(request, 'base/post.html', context)
 
 
