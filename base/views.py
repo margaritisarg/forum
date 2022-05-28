@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Post
 from django.db import connection, connections
 from .classes.table_joins import Post_joined_user
+from .sql.queries import sql_post_join
 
 def loginPage(request):
     if request.method == "POST":
@@ -48,7 +49,7 @@ def post(request):
     username = request.user.username
 
     cursor = connection.cursor()
-    cursor.execute(f"SELECT  a.[username], b.[header], b.[body] FROM ( SELECT [header], [body], [user_id] FROM base_post WHERE user_id = {user_id} ) b INNER JOIN auth_user a ON b.user_id = a.id")
+    cursor.execute(sql_post_join(user_id))
     results = cursor.fetchall()
 
     results_list = []
