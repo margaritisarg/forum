@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post
-from django.db import connection, connections
-from .classes.table_joins import Post_joined_user
-from .sql.queries import sql_post_join
+from .classes.table_joins import Post_user
 
 def loginPage(request):
     if request.method == "POST":
@@ -36,7 +34,7 @@ def home(request):
     username = request.user.username
     user_id = request.user.id 
     
-    if username is None and user_id is None:
+    if username is None or user_id is None:
         username = "NoUserName"
         user_id = 0
 
@@ -48,17 +46,7 @@ def post(request):
     user_id = request.user.id 
     username = request.user.username
 
-    cursor = connection.cursor()
-    cursor.execute(sql_post_join(user_id))
-    results = cursor.fetchall()
-
-    results_list = []
-    for result in results:
-        post_joined_user = Post_joined_user()
-        post_joined_user.user = result[0]
-        post_joined_user.header = result[1]
-        post_joined_user.body = result[2]
-        results_list.append(post_joined_user)
+    results_list = Post_user.return_user_post_join(user_id)
 
     context = {'user_id': user_id, 'username': username, 'posts': results_list}
     return render(request, 'base/post.html', context)
@@ -70,21 +58,16 @@ def post(request):
 
 
 """
-    query = Post.objects.select_related('user').filter(user__id__iexact=1)
+    I will come back to this
 
     print()
+    print(cursor.description)
+    for c in cursor.description:
+        print(c[0] + '---')
     print()
-    print(type(query))
-    print(query)
-    print(type(query))
-    print(query.query)
-    print()
-
-    for e in query.all():
-        print(e)
-        #print(e.auth_useris_active)
-
-    print()
+    print(type(results))
+    for r in results:
+        print(r)
     print()
 
 
