@@ -3,13 +3,7 @@
 {% block content %}
     <body>
         <div class="container">
-            <div>
-                <div class="card-body">
-                    <a class="nav-link" href="{% url 'createpost' %}">
-                        <input class="form-control" type="text" placeholder="Create Post" />
-                    </a>
-                </div>  
-            </div>
+            {% include 'base/components/create_post_component.html'%}
             <div class="row">
                 <div class="col-lg-8">
                     {% for post in posts %} 
