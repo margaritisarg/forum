@@ -1,3 +1,4 @@
+from turtle import pos
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -46,7 +47,8 @@ def myposts(request):
     user_id = request.user.id 
     username = request.user.username
 
-    results_list = Post_user.return_user_post_join(user_id)
+    print()
+    results_list = Post.objects.filter(user=user_id)
 
     context = {'user_id': user_id, 'username': username, 'posts': results_list}
     return render(request, 'base/myposts.html', context)
@@ -64,25 +66,18 @@ def createpost(request):
     else:
         return render(request, 'base/components/create_post_component.html')
 
+@login_required(login_url='login')
+def deletepost(request):
+    user_id = request.user.id
+    post_id = request.GET.get('id')
+    #post = Post.objects.get(pk=post_id)
+    #print(f"user id: {user_id}, post id: {post_id}, post object: {post}")
+    print(f"user id: {user_id}, {post_id}")
+
+    context = {'user_id': user_id}
+    return render(request, 'base/deletepost.html', context)
 
 
 
 
-"""
-    I will come back to this
-
-    print()
-    print(cursor.description)
-    for c in cursor.description:
-        print(c[0] + '---')
-    print()
-    print(type(results))
-    for r in results:
-        print(r)
-    print()
-
-
-"""
-
-
-
+#results_list = Post_user.return_user_post_join(user_id)
