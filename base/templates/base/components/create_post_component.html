@@ -1,9 +1,32 @@
+{% extends 'base/main.html' %}
 
-<div>
+{% block content %}
+<div class="container">
+    <h1> Create a new post </h1>
+
+    <form method="POST" action="">
+        {% csrf_token %}
+        <div class="card mb-4"> 
+            <input id="header" type="text" name="header" placeholder="Title" autocomplete="off">
+        </div>
+        <div class="card mb-4">         
+            <input id="body" type="text" name="body" placeholder="Content" autocomplete="off">
+        </div>
+        <div class="card mb-4">
+            <input type="submit" value="OK">
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
+<!--
+<div class="container">
     <div class="card-body">
         <a class="nav-link" href="{% url 'createpost' %}">
             <input class="form-control" type="text" placeholder="Create Post" />
         </a>
-    </div>  
-</div>
+    </div>    
+-->
+
 

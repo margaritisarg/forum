@@ -51,7 +51,7 @@ def myposts(request):
     context = {'user_id': user_id, 'username': username, 'posts': results_list}
     return render(request, 'base/myposts.html', context)
 
-
+@login_required(login_url='login')
 def createpost(request):
     if request.method == "POST":
         user_id = request.user.id 
@@ -62,7 +62,7 @@ def createpost(request):
 
         return redirect('myposts')
     else:
-        return render(request, 'base/create_post.html')
+        return render(request, 'base/components/create_post_component.html')
 
 
 

@@ -5,8 +5,8 @@
     <div class="container"> {{user_id}}  {{username}}</div>
     
     <div class="container">
-        {% include 'base/components/create_post_component.html'%}
-        
+        {% include 'base/create_post_link.html'%}
+
         {% if posts is not None %}
             {% for post in posts %} 
                 {% include 'base/components/post_component.html' with post=post %}
