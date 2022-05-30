@@ -66,18 +66,18 @@ def createpost(request):
     else:
         return render(request, 'base/components/create_post_component.html')
 
-@login_required(login_url='login')
-def deletepost(request):
-    user_id = request.user.id
-    post_id = request.GET.get('id')
-    #post = Post.objects.get(pk=post_id)
-    #print(f"user id: {user_id}, post id: {post_id}, post object: {post}")
-    print(f"user id: {user_id}, {post_id}")
 
-    context = {'user_id': user_id}
+@login_required(login_url='login')
+def deletepost(request, pk):
+    post = Post.objects.filter(id=pk)
+
+    if request.method == 'POST':
+        post.delete()
+        return redirect('myposts')
+    
+    context = {'posts': post}
     return render(request, 'base/deletepost.html', context)
 
 
 
 
-#results_list = Post_user.return_user_post_join(user_id)
