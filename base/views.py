@@ -42,7 +42,7 @@ def home(request):
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')
-def post(request):
+def myposts(request):
     user_id = request.user.id 
     username = request.user.username
 
