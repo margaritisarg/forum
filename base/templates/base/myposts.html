@@ -2,10 +2,10 @@
 
 {% block content %}
 
-    <div class="container"> {{user_id}}  {{username}}</div>
-    
     <div class="container">
         {% include 'base/create_post_link.html'%}
+
+        <div class="card-body mb-4-custom"> {{user_id}}  {{username}} - Total Posts: {{posts.count}}</div>
 
         {% if posts is not None %}
             {% for post in posts %} 
