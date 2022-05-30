@@ -49,9 +49,20 @@ def myposts(request):
     results_list = Post_user.return_user_post_join(user_id)
 
     context = {'user_id': user_id, 'username': username, 'posts': results_list}
-    return render(request, 'base/post.html', context)
+    return render(request, 'base/myposts.html', context)
 
 
+def createpost(request):
+    if request.method == "POST":
+        user_id = request.user.id 
+        header, body = request.POST["header"], request.POST["body"]
+        
+        post_instance = Post.objects.create(header=header, body=body, user_id=user_id)
+        post_instance.save()
+
+        return redirect('myposts')
+    else:
+        return render(request, 'base/create_post.html')
 
 
 

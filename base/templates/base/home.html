@@ -3,9 +3,13 @@
 {% block content %}
     <body>
         <div class="container">
-            {% if request.user.is_authenticated %}
-                <span>{{user_id}} {{username}}</span>
-            {% endif%}
+            <div>
+                <div class="card-body">
+                    <a class="nav-link" href="{% url 'createpost' %}">
+                        <input class="form-control" type="text" placeholder="Create Post" />
+                    </a>
+                </div>  
+            </div>
             <div class="row">
                 <div class="col-lg-8">
                     {% for post in posts %} 
@@ -26,7 +30,11 @@
 
 {% endblock %}
 
-
+<!--
+    {% if request.user.is_authenticated %}
+        <span>{{user_id}} {{username}}</span>
+    {% endif%}
+-->
 
 <!-- Nested row for non-featured blog posts-->
 <!--
