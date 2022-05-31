@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Post
+from .models import Post, Comment
 from .classes.table_joins import Post_user
 
 def loginPage(request):
@@ -55,7 +55,7 @@ def myposts(request):
 
 def commentspost(request, pk):
     post = Post.objects.filter(id=pk)
-    comments = {"nice": "Nice stuff", "cool": "Cool story bro"}
+    comments = Comment.objects.filter(post_id=pk)
 
     context = {'posts': post, "comments": comments}
     return render(request, 'base/commentspost.html', context)
