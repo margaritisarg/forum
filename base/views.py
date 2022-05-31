@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment
 from .classes.table_joins import Post_user
+from django.db.models import Q
 
 def loginPage(request):
     if request.method == "POST":
@@ -55,9 +56,13 @@ def myposts(request):
 
 def commentspost(request, pk):
     post = Post.objects.filter(id=pk)
-    comments = Comment.objects.filter(post_id=pk)
+    comments = Comment.objects.filter(post_id=pk).values()
+    #users = User.objects.values_list('username', flat=True).filter(Q(comment__user_id=1) & Q(comment__post_id=16))
+    #users = User.objects.values_list('username', flat=True).filter(Q(comment__post_id=pk))
+    users = User.objects.filter(Q(comment__post_id=pk))
+    #users = User.objects.filter(comment__user_id=1).all()
 
-    context = {'posts': post, "comments": comments}
+    context = {'posts': post, "comments": comments, 'users': users}
     return render(request, 'base/commentspost.html', context)
 
 @login_required(login_url='login')
@@ -87,4 +92,17 @@ def deletepost(request, pk):
 
 
 
-
+"""
+    data = Comment.objects.filter(body='Defo Mafia!').values()
+ 
+    s = set()
+    s.add(frozenset(('johny','22')))
+    s.add(frozenset(('jenny','19')))
+    print()
+    for t in s.item.values():
+        print(t)
+    print()
+    #print(f"{data[0]['body']}")
+    #print(f"comments: {comments[0]}")
+    #print()
+"""

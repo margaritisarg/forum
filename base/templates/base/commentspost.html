@@ -5,13 +5,10 @@
 <div class="container">
     {% if posts is not None %}
         {% for post in posts %} 
-            {% include 'base/components/post_component.html' with post=post comments=comments %}
+            {% include 'base/components/post_component.html' with post=post comments=comments users=users %}
         {% endfor %}
     {% endif %}
 
-    {% for c in con %}
-        <p class="card-comment"> {{c.body}} </p>
-    {% endfor%}
 </div>
 
 {% endblock %}
