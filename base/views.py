@@ -47,11 +47,18 @@ def myposts(request):
     user_id = request.user.id 
     username = request.user.username
 
-    print()
     results_list = Post.objects.filter(user=user_id)
-
     context = {'user_id': user_id, 'username': username, 'posts': results_list}
+
     return render(request, 'base/myposts.html', context)
+
+
+def commentspost(request, pk):
+    post = Post.objects.filter(id=pk)
+    comments = {"nice": "Nice stuff", "cool": "Cool story bro"}
+
+    context = {'posts': post, "comments": comments}
+    return render(request, 'base/commentspost.html', context)
 
 @login_required(login_url='login')
 def createpost(request):

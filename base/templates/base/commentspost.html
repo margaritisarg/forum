@@ -1,0 +1,13 @@
+{% extends 'base/main.html' %}
+
+{% block content %}
+
+<div class="container">
+    {% if posts is not None %}
+        {% for post in posts %} 
+            {% include 'base/components/post_component.html' with post=post comments=comments %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -4569,6 +4569,17 @@ textarea.form-control-lg {
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
+
+.card-comment {
+  padding: 0.5rem 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  background-color: #EFF2F5;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+
 .card-header:first-child {
   border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
 }

@@ -1,23 +1,27 @@
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="card-text small"> {{post.user}} - {{post.created | timesince}}   </div>
-            <!-- <div class="small text-muted"> {{user}} </div> -->
-            <div class="card-header">{{post.header}} </div>
-            <!-- <h2 class="card-title">Featured Post Title</h2> -->
-            <p class="card-text"> {{post.body}} </p>
-            <!-- <a class="btn btn-primary" href="#!">Read more →</a> -->
-            <iframe class="card-img-top center" src="https://giphy.com/embed/duzpaTbCUy9Vu" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-            
-            <form method="POST" action="">
-                {% csrf_token %} 
-                {% if request.user.id == post.user_id %}
-                    <button class="button"> <a class="nav-link" href="{% url 'deletepost' post.id %}#"> Delete Post </a></button>
-                {% endif %}
-            </form>
-        </div>   
-    </div>
 
-    <!--
-                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/500x300/a2b4e0/0011ff.jpg&text=What's+up" alt="..." /></a>
-    -->
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="card-text small"> {{post.user}} - {{post.created | timesince}}   </div>
+        <!-- <div class="small text-muted"> {{user}} </div> -->
+        <div class="card-header">{{post.header}} </div>
+        <!-- <h2 class="card-title">Featured Post Title</h2> -->
+        <p class="card-text"> {{post.body}} </p>
+        <!-- <a class="btn btn-primary" href="#!">Read more →</a> -->
+        <iframe class="card-img-top center" src="https://giphy.com/embed/duzpaTbCUy9Vu" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+        
+        <form method="POST" action="">
+            {% csrf_token %} 
+            {% if request.user.id == post.user_id %}
+                <button class="button"> <a class="nav-link" href="{% url 'deletepost' post.id %}#"> Delete Post </a></button>
+            {% endif %}
+        </form>
+        <form method="POST" action="">        
+            {% csrf_token %}             
+            <button class="button"> <a class="nav-link" href="{% url 'commentspost' post.id %}#"> Comments </a></button>
+        </form>
+            {% include 'base/components/comment_component.html' with comments=comments %}
+    </div>   
+</div>
+
+
