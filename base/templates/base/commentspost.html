@@ -8,6 +8,10 @@
             {% include 'base/components/post_component.html' with post=post comments=comments %}
         {% endfor %}
     {% endif %}
+
+    {% for c in con %}
+        <p class="card-comment"> {{c.body}} </p>
+    {% endfor%}
 </div>
 
 {% endblock %}
