@@ -57,11 +57,8 @@ def myposts(request):
 def commentspost(request, pk):
     post = Post.objects.filter(id=pk)
     comments = Comment.objects.filter(post_id=pk).values()
-    #users = User.objects.values_list('username', flat=True).filter(Q(comment__user_id=1) & Q(comment__post_id=16))
-    #users = User.objects.values_list('username', flat=True).filter(Q(comment__post_id=pk))
-    users = User.objects.filter(Q(comment__post_id=pk))
-    #users = User.objects.filter(comment__user_id=1).all()
-
+    users = User.objects.filter(comment__post_id=pk).only('id', 'username')
+    
     context = {'posts': post, "comments": comments, 'users': users}
     return render(request, 'base/commentspost.html', context)
 
@@ -93,16 +90,12 @@ def deletepost(request, pk):
 
 
 """
+
+    #users = User.objects.values_list('username', flat=True).filter(Q(comment__user_id=1) & Q(comment__post_id=16))
+    #usersORGINAL = User.objects.filter(Q(comment__post_id=pk))
+    #users = User.objects.filter(comment__user_id=1).all()
+
     data = Comment.objects.filter(body='Defo Mafia!').values()
  
-    s = set()
-    s.add(frozenset(('johny','22')))
-    s.add(frozenset(('jenny','19')))
-    print()
-    for t in s.item.values():
-        print(t)
-    print()
-    #print(f"{data[0]['body']}")
-    #print(f"comments: {comments[0]}")
-    #print()
+
 """
