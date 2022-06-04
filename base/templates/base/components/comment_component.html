@@ -1,9 +1,5 @@
 
-    {% for comment in comments %}
-        {% for user in users %}
-            {% if user.id == comment.user_id %}
-                <p class="card-comment"> {{user.username}}: {{comment.body}} </p>
-            {% endif%}
-        {% endfor%}
-    {% endfor %}
+{% for comment in comments_list %}
+    <p class="card-comment"> {{comment.user__username}}: {{comment.body}} </p>
+{% endfor%}
 

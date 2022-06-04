@@ -352,6 +352,7 @@ textarea {
   line-height: inherit;
 }
 
+
 button,
 select {
   text-transform: none;
@@ -11304,4 +11305,11 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+
+
+
+textarea textarea-custom{
+  width: 100% !important;
+  margin-bottom: 350px !important;
 }

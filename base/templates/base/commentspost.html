@@ -4,9 +4,19 @@
 
 <div class="container">
     {% if posts is not None %}
-        {% for post in posts %} 
-            {% include 'base/components/post_component.html' with post=post comments=comments users=users %}
+        {% for post in posts %}
+            {% include 'base/components/post_component.html' with post=post comments=comments users=users comments_list=comments_list %}
         {% endfor %}
+    {% endif %}
+
+    {% if request.user.is_authenticated %}
+    <div class="container">
+       <form method="POST" action="">
+          {% csrf_token %}   
+          <textarea type="text" rows="4" cols="80" class="textarea-custom" name="user_comment" placeholder="Write your comment..." autocomplete='off'></textarea>
+          <input type="submit" value="OK">
+       </form>
+    </div>
     {% endif %}
 
 </div>
