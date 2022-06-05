@@ -71,10 +71,17 @@ def commentspost(request, pk):
     context = {'posts': post, 'comments_list':all_comments}
 
     if request.method == "POST":
-        comment = request.POST["user_comment"]
-        comment_instance = Comment.objects.create(body=comment, post_id=pk, user_id=request.user.id)
-        comment_instance.save()
-        return redirect('commentspost', pk=pk)
+        comment_id = request.POST.get('comment_id')
+        delete_comment = request.POST.get('delete_comment')
+        if 'delete_comment' == delete_comment:
+            comment = Comment.objects.filter(id=comment_id)
+            comment.delete()
+            return redirect('commentspost', pk=pk)
+        else:
+            comment = request.POST["user_comment"]
+            comment_instance = Comment.objects.create(body=comment, post_id=pk, user_id=request.user.id)
+            comment_instance.save()
+            return redirect('commentspost', pk=pk)
     else:
         return render(request, 'base/commentspost.html', context)
 

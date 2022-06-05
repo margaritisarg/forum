@@ -5,9 +5,10 @@
 <div class="container">
     {% if posts is not None %}
         {% for post in posts %}
-            {% include 'base/components/post_component.html' with post=post comments=comments users=users comments_list=comments_list %}
+            {% include 'base/components/post_component.html' with comments_list=comments_list %}
         {% endfor %}
     {% endif %}
+    
 
     {% if request.user.is_authenticated %}
     <div class="container">
