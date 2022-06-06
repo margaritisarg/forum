@@ -1,0 +1,90 @@
+.button-6-custom, .button-delete-custom, .nav-button-delete {
+    align-items: center;
+    background-color: #EFF2F5;
+    border: 1px solid rgba(133, 133, 133, 0.1);
+    border-radius: .25rem;
+    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+    box-sizing: border-box;
+    color: rgba(0, 0, 0, 0.85);
+    cursor: pointer;
+    display: inline-flex;
+    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    justify-content: center;
+    line-height: 1.25;
+    margin: 0;
+    min-height: 3rem;
+    padding: 0.5rem 0.75rem;
+    position: relative;
+    text-decoration: none;
+    transition: all 250ms;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: baseline;
+    width: auto;
+    text-decoration: none;
+  }
+  
+  .button-6-custom:hover, .button-delete-custom:hover,
+  .button-6-custom:focus, .button-delete-custom:focus {
+    border-color: #e4e2f3;
+    border: 1px;
+    background-color: #e4e2f3;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+    color: rgba(0, 0, 0, 0.65);
+  }
+  
+  .button-6-custom:hover, .button-delete-custom:hover {
+    transform: translateY(-1px);
+  }
+  
+  .button-6-custom:active, .button-delete-custom:active {
+    background-color: #F0F0F1;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(0, 0, 0, 0.65);
+    transform: translateY(0);
+  }
+
+
+
+
+  .button-delete-custom, .nav-button-delete{
+      color: black;
+  }
+
+  .button-delete-custom:active, .nav-button-delete:active {
+    background-color: #ee4c4c;
+    border-color: rgba(0, 0, 0, 0.15);
+    box-shadow: rgba(0, 0, 0, 0.06) 0 2px 4px;
+    color: rgba(201, 0, 0, 0.65);
+    transform: translateY(0);
+  }
+
+  .button-delete-custom:hover, .nav-button-delete:hover,
+  .button-delete-custom:focus, .nav-button-delete:hover {
+    border-color: rgba(255, 0, 0, 0.807);
+    box-shadow: rgba(226, 116, 116, 0.1) 0 4px 12px;
+    background-color: #efe7e7b5;
+    color: rgb(255, 0, 0);
+  }
+
+
+.Row {
+    display: table;
+    width: 80%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 50px; /*Optional*/
+}
+.Column {
+    display: table-cell;
+    width: fit-content;
+
+}
+
+.flexbox-container{
+    display: flex;
+    justify-content: center;
+}

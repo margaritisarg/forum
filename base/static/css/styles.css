@@ -635,8 +635,8 @@ progress {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 0.75rem);
-  padding-left: var(--bs-gutter-x, 0.75rem);
+  padding-right: var(--bs-gutter-x, 5rem);
+  padding-left: var(--bs-gutter-x, 5rem);
   margin-right: auto;
   margin-left: auto;
 }
@@ -3942,8 +3942,8 @@ textarea.form-control-lg {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem;
-  color: #0d6efd;
+  padding: 0.25rem 0.25rem;
+  color: black;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -4543,6 +4543,12 @@ textarea.form-control-lg {
 }
 
 .card-body {
+  box-shadow: 0px 0px 2px 2px #dbe3eb;
+  flex: 1 1 auto;
+  padding: 0.75rem 0.75rem;
+}
+
+.card-body-create-post_custom {
   flex: 1 1 auto;
   padding: 0.75rem 0.75rem;
 }
@@ -4558,6 +4564,24 @@ textarea.form-control-lg {
 
 .card-text:last-child {
   margin-bottom: 0;
+  padding: 2.5rem 2rem;
+  color: red;
+}
+
+
+
+
+.card-text-body-custom{
+  margin-bottom: 0;
+  padding: 1rem 0.5rem;
+  color: black;
+  text-align: center;
+}
+
+.card-text-small {
+  margin-bottom: 0;
+  font-size: 0.875em;
+  color: #ababab;
 }
 
 .card-link + .card-link {
@@ -4566,9 +4590,14 @@ textarea.form-control-lg {
 
 .card-header {
   padding: 0.5rem 1rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
   margin-bottom: 0;
   background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.25rem;
 }
 
 .card-comment {
