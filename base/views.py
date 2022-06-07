@@ -5,9 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
 from django.db.models import Q
 
+
 def loginPage(request):
-    print()
-    print("In login view")
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -28,6 +27,7 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 def logoutUser(request):
+    print("In logoutUser...")
     logout(request)
     return redirect('home')
 
@@ -65,6 +65,10 @@ def myposts(request):
 
 
 def commentspost(request, pk):
+    print("------------------------")
+    print("")
+    print("In commentsposts")
+    print("")
     post = Post.objects.filter(id=pk)
     users = User.objects.filter(comment__post_id=pk).values('id')
 
@@ -79,6 +83,7 @@ def commentspost(request, pk):
     context = {'posts': post, 'comments_list':all_comments}
 
     if request.method == "POST":
+        print(" in request method post of comments.....")
         comment_id = request.POST.get('comment_id')
         delete_comment = request.POST.get('delete_comment')
         if 'delete_comment' == delete_comment:
@@ -107,15 +112,21 @@ def userprofile(request, pk):
 
 @login_required(login_url='login')
 def createpost(request):
+    print()
+    print("-----------------")
+    print("In createPost View..")
     if request.method == "POST":
+        print("Request Method == POST, WE HERE")
         user_id = request.user.id 
         header, body = request.POST["header"], request.POST["body"]
         
         post_instance = Post.objects.create(header=header, body=body, user_id=user_id)
         post_instance.save()
-
+        print("End of createPost, redirect time")
         return redirect('myposts')
     else:
+        print("No request method found")
+        print("-------------")
         return render(request, 'base/components/create_post_component.html')
 
 
