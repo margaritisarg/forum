@@ -6,6 +6,8 @@ from .models import Post, Comment, UserProfile, Follow
 from django.db.models import Q
 
 def loginPage(request):
+    print()
+    print("In login view")
     if request.method == "POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
