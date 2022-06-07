@@ -1,4 +1,3 @@
-from pydoc import describe
 from tkinter import CASCADE
 from django.conf import settings
 from django.db import models
@@ -28,7 +27,6 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.body
-
 
 class UserProfile(models.Model):
     description = models.TextField()

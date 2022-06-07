@@ -12,13 +12,11 @@
 
     {% if request.user.is_authenticated %}
     <div class="container">
-
        <form method="POST" action="">
           {% csrf_token %}   
           <textarea type="text" rows="4" cols="80" class="textarea-custom-web" name="user_comment" placeholder="Write your comment..." autocomplete='off'></textarea>
           <input type="submit" class="button-6-custom" value="Submit">
        </form>
-    
     </div>
     {% endif %}
 

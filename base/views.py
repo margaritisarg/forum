@@ -1,10 +1,12 @@
+from ast import arg
+from turtle import pos
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
 from django.db.models import Q
-
 
 def loginPage(request):
     if request.method == "POST":
@@ -27,22 +29,21 @@ def loginPage(request):
     return render(request, 'base/login_register.html', context)
 
 def logoutUser(request):
-    print("In logoutUser...")
     logout(request)
     return redirect('home')
 
+def userprofile(request, pk):
+    user_profile = UserProfile.objects.filter(user__id=pk).values('id', 'description', 'user_id', 'user__username')
+    user_followers = Follow.objects.filter(followed_id=pk).values('id', 'followed_id', 'follower_id')
+
+    user_followers_count = user_followers.count()
+
+    context = {'user_profile': user_profile[0], 'user_follower_count': user_followers_count}
+    return render(request, 'base/user_profile.html', context)
+
+
 def home(request):
-
-    q = request.GET.get('q') if request.GET.get('q') != None else ''
-    posts = Post.objects.filter(
-        Q(header__icontains=q) |
-        Q(body__icontains=q) |
-        Q(user__username__icontains=q) 
-    )
-
-    if posts is None:
-        posts = Post.objects.all()
-    
+    posts = Post.objects.all()
     username = request.user.username
     user_id = request.user.id 
     
@@ -65,10 +66,6 @@ def myposts(request):
 
 
 def commentspost(request, pk):
-    print("------------------------")
-    print("")
-    print("In commentsposts")
-    print("")
     post = Post.objects.filter(id=pk)
     users = User.objects.filter(comment__post_id=pk).values('id')
 
@@ -83,7 +80,6 @@ def commentspost(request, pk):
     context = {'posts': post, 'comments_list':all_comments}
 
     if request.method == "POST":
-        print(" in request method post of comments.....")
         comment_id = request.POST.get('comment_id')
         delete_comment = request.POST.get('delete_comment')
         if 'delete_comment' == delete_comment:
@@ -100,33 +96,20 @@ def commentspost(request, pk):
 
 
 
-def userprofile(request, pk):
-    user_profile = UserProfile.objects.filter(user__id=pk).values('id', 'description', 'user_id', 'user__username')
-    user_followers = Follow.objects.filter(followed_id=pk).values('id', 'followed_id', 'follower_id')
 
-    user_followers_count = user_followers.count()
-
-    context = {'user_profile': user_profile[0], 'user_follower_count': user_followers_count}
-    return render(request, 'base/user_profile.html', context)
 
 
 @login_required(login_url='login')
 def createpost(request):
-    print()
-    print("-----------------")
-    print("In createPost View..")
     if request.method == "POST":
-        print("Request Method == POST, WE HERE")
         user_id = request.user.id 
         header, body = request.POST["header"], request.POST["body"]
         
         post_instance = Post.objects.create(header=header, body=body, user_id=user_id)
         post_instance.save()
-        print("End of createPost, redirect time")
+
         return redirect('myposts')
     else:
-        print("No request method found")
-        print("-------------")
         return render(request, 'base/components/create_post_component.html')
 
 
