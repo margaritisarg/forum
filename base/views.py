@@ -1,12 +1,8 @@
-from ast import arg
-from turtle import pos
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comment
-from .classes.full_post import Full_post_comment 
+from .models import Post, Comment, UserProfile
 from django.db.models import Q
 
 def loginPage(request):
@@ -34,7 +30,17 @@ def logoutUser(request):
     return redirect('home')
 
 def home(request):
-    posts = Post.objects.all()
+
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    posts = Post.objects.filter(
+        Q(header__icontains=q) |
+        Q(body__icontains=q) |
+        Q(user__username__icontains=q) 
+    )
+
+    if posts is None:
+        posts = Post.objects.all()
+    
     username = request.user.username
     user_id = request.user.id 
     
@@ -87,7 +93,15 @@ def commentspost(request, pk):
 
 
 
-
+def userprofile(request, pk):
+    user_profile = UserProfile.objects.filter(user__id=pk).values('id', 'description', 'user_id', 'user__username')
+    print()
+    print(user_profile)
+    print(user_profile[0])
+    print(user_profile[0]['description'])
+    print()
+    context = {'user_profile': user_profile[0]}
+    return render(request, 'base/user_profile.html', context)
 
 
 @login_required(login_url='login')

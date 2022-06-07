@@ -1,3 +1,4 @@
+from pydoc import describe
 from tkinter import CASCADE
 from django.conf import settings
 from django.db import models
@@ -27,4 +28,14 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.header
+
+
+class UserProfile(models.Model):
+    description = models.TextField()
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    updated = models.DateTimeField(auto_now=True)    
+    created = models.DateTimeField(auto_now_add=True)  
+
+    def __str__(self):
+        return self.description
 

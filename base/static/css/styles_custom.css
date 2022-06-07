@@ -65,7 +65,7 @@
 
   .button-delete-custom:hover, .nav-button-delete:hover,
   .button-delete-custom:focus, .nav-button-delete:hover {
-    border-color: rgba(255, 0, 0, 0.807);
+    border-color: rgba(255, 0, 0, 0);
     box-shadow: rgba(226, 116, 116, 0.1) 0 4px 12px;
     background-color: #efe7e7b5;
     color: rgb(255, 0, 0);
@@ -115,4 +115,8 @@
     border-color: #EFF2F5;
   }
   
+
+  .padding-custom{
+    padding: 0%;
+  }
 

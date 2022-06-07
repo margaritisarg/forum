@@ -4582,6 +4582,7 @@ textarea.form-control-lg {
   margin-bottom: 0;
   font-size: 0.875em;
   color: #ababab;
+  text-decoration: none;
 }
 
 .card-link + .card-link {
