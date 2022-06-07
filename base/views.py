@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Post, Comment, UserProfile
+from .models import Post, Comment, UserProfile, Follow
 from django.db.models import Q
 
 def loginPage(request):
@@ -95,12 +95,11 @@ def commentspost(request, pk):
 
 def userprofile(request, pk):
     user_profile = UserProfile.objects.filter(user__id=pk).values('id', 'description', 'user_id', 'user__username')
-    print()
-    print(user_profile)
-    print(user_profile[0])
-    print(user_profile[0]['description'])
-    print()
-    context = {'user_profile': user_profile[0]}
+    user_followers = Follow.objects.filter(followed_id=pk).values('id', 'followed_id', 'follower_id')
+
+    user_followers_count = user_followers.count()
+
+    context = {'user_profile': user_profile[0], 'user_follower_count': user_followers_count}
     return render(request, 'base/user_profile.html', context)
 
 

@@ -27,7 +27,7 @@ class Comment(models.Model):
         ordering = ['-updated', '-created']
 
     def __str__(self):
-        return self.header
+        return self.body
 
 
 class UserProfile(models.Model):
@@ -38,4 +38,14 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.description
+
+
+class Follow(models.Model):
+    followed = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed')
+    follower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='follower')   
+    updated = models.DateTimeField(auto_now=True)    
+    created = models.DateTimeField(auto_now_add=True)  
+
+    def __str__(self):
+        return f"{str(self.id)} {self.followed} {self.follower}"
 

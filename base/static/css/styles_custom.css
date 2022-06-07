@@ -1,4 +1,4 @@
-.button-6-custom, .button-delete-custom, .nav-button-delete {
+.button-6-custom, .button-delete-custom, .nav-button-delete, .button-follow {
     align-items: center;
     background-color: #EFF2F5;
     border: 1px solid rgba(133, 133, 133, 0.1);
@@ -120,3 +120,23 @@
     padding: 0%;
   }
 
+  .button-follow{
+    padding: 0%;
+    margin: 0%;
+    font-size: 0.875em;
+    color: #ababab;
+    text-decoration: none;
+    background-color: white;
+    border-color: white;
+    margin-right: 10px;
+  }
+
+  .button-follow:hover, .button-follow:focus {
+    color: blue;
+    transform: translateY(-1px);
+  }
+
+
+  form{
+    all: unset
+  }

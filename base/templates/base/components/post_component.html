@@ -2,12 +2,18 @@
 
 <div class="card mb-4-post">
     <div class="card-body">
-        <div class="card-text-small"> <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}   </div>
-        <!-- <div class="small text-muted"> {{user}} </div> -->
+        <div class="card-text-small"> 
+            <form method="POST" action="" class="card-text-small">
+                {% csrf_token %} 
+                    <a class="button-follow" href="{% url 'deletepost' post.id %}#"> Follow </a>
+            </form>
+            <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
+        </div>
+        
         <div class="card-header">{{post.header}} </div>
-        <!-- <h2 class="card-title">Featured Post Title</h2> -->
+        
         <p class="card-text-body-custom"> {{post.body}} </p>
-        <!-- <a class="btn btn-primary" href="#!">Read more →</a> -->
+        
         <iframe class="card-img-top center" src="https://giphy.com/embed/duzpaTbCUy9Vu" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
 
 
