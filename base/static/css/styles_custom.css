@@ -101,6 +101,7 @@
     width: 100%;
     height: 100%;
     transition: all 0.2s;
+    margin-bottom: 50px;
   }
   
   .textarea-custom-web:hover {
@@ -116,3 +117,11 @@
   }
   
 
+.hide-submit-button{
+  display:none
+}
+
+.search-bar-custom{
+  padding: 0%;
+  width: 100%;
+}
