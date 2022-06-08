@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
+from .classes.generic_functions import searchbar
 from django.db.models import Q
 import logging
 
@@ -44,16 +45,11 @@ def userprofile(request, pk):
 
 
 def home(request):
-    q = request.GET.get('q') if request.GET.get('q') != None else ''
-    posts = Post.objects.filter(
-        Q(header__icontains=q) |
-        Q(body__icontains=q) |
-        Q(user__username__icontains=q) 
-    )
+    posts = searchbar(request)
 
     if posts is None:
         posts = Post.objects.all()
-        
+
     username = request.user.username
     user_id = request.user.id 
 
