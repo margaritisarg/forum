@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
 from django.db.models import Q
+import logging
 
 def loginPage(request):
     if request.method == "POST":
@@ -46,7 +47,16 @@ def home(request):
     posts = Post.objects.all()
     username = request.user.username
     user_id = request.user.id 
-    
+
+    level= logging.DEBUG
+    fmt = '[%(levelname)s] %(asctime)s - %(message)s'
+    logging.basicConfig(level=level, format=fmt)
+    print()
+    logging.debug(" some debug")
+    logging.info(" some info")
+    logging.error(" some error")
+
+
     if username is None or user_id is None:
         username = "NoUserName"
         user_id = 0
