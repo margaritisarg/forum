@@ -5,7 +5,14 @@
         <div class="card-text-small"> 
             <form method="POST" action="" class="card-text-small">
                 {% csrf_token %} 
-                    <a class="button-follow" href="{% url 'deletepost' post.id %}#"> Follow </a>
+
+                {% for i in followers %}                   
+                    {% if i.followed_id == post.user_id %}
+                        <a class="button-following" href="{% url 'deletepost' post.id %}#">Following</a>
+                    {% else %}
+                        <a class="button-not-following" href="{% url 'deletepost' post.id %}#">Not Following</a>
+                    {%  endif %}
+                {% endfor %}
             </form>
             <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
         </div>
@@ -32,8 +39,6 @@
             {% endif %}
         </div>          
         {% include 'base/components/comment_component.html' with comments=comments %}   
-
-
 
 
     </div>   

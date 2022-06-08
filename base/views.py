@@ -46,18 +46,23 @@ def userprofile(request, pk):
 
 def home(request):
     posts = searchbar(request)
+    username = request.user.username
+    user_id = request.user.id 
+
+    followers = Follow.objects.filter(follower_id=user_id).values('followed_id', 'follower_id')
+    #followers = followers.filter()
+    print()
+    print(followers)
+    print()
 
     if posts is None:
         posts = Post.objects.all()
-
-    username = request.user.username
-    user_id = request.user.id 
 
     if username is None or user_id is None:
         username = "NoUserName"
         user_id = 0
 
-    context = {'posts': posts, 'username': username, 'user_id': user_id}
+    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followers': followers}
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')

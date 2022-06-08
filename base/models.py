@@ -45,5 +45,5 @@ class Follow(models.Model):
     created = models.DateTimeField(auto_now_add=True)  
 
     def __str__(self):
-        return f"{str(self.id)} {self.followed} {self.follower}"
+        return f"{str(self.id)} {self.follower} follows {self.followed}"
 
