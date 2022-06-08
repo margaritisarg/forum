@@ -15,7 +15,7 @@ def loginPage(request):
         password = request.POST.get('password')
 
         try:
-            user = User.objects.get(username = user)
+            user = User.objects.get(username = username)
         except:
             print("Error - user / password incorrect, does not exist.")
 
@@ -47,14 +47,6 @@ def home(request):
     posts = Post.objects.all()
     username = request.user.username
     user_id = request.user.id 
-
-    level= logging.DEBUG
-    fmt = '[%(levelname)s] %(asctime)s - %(message)s'
-    logging.basicConfig(level=level, format=fmt)
-    print()
-    logging.debug(" some debug")
-    logging.info(" some info")
-    logging.error(" some error")
 
 
     if username is None or user_id is None:
@@ -137,6 +129,14 @@ def deletepost(request, pk):
 
 
 """
+
+    level= logging.DEBUG
+    fmt = '[%(levelname)s] %(asctime)s - %(message)s'
+    logging.basicConfig(level=level, format=fmt)
+    print()
+    logging.debug(" some debug")
+    logging.info(" some info")
+    logging.error(" some error")
 
    #all_comments = Comment.objects.filter(post__id=pk).values('id', 'body', 'post_id', 'user_id', 'post__id', 'post__header', 'post__body')
     #all_comments2 = all_comments.filter(user__id=3).values('id', 'body', 'post_id', 'user_id', 'user__id', 'user__username')
