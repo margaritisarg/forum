@@ -44,10 +44,18 @@ def userprofile(request, pk):
 
 
 def home(request):
-    posts = Post.objects.all()
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    posts = Post.objects.filter(
+        Q(header__icontains=q) |
+        Q(body__icontains=q) |
+        Q(user__username__icontains=q) 
+    )
+
+    if posts is None:
+        posts = Post.objects.all()
+        
     username = request.user.username
     user_id = request.user.id 
-
 
     if username is None or user_id is None:
         username = "NoUserName"

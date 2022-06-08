@@ -1,12 +1,13 @@
-
-<!-- Page header with logo and tagline-->
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-1">
             <!-- <h1 class="fw-bolder">Home</h1> -->                            
             <div class="card mb-4">                        
                     <div class="input-group">
-                        <input class="form-control" type="text" placeholder="Search forum" aria-label="Search forum" aria-describedby="button-search" />
+                        <form action="{% url 'home' %}" method="GET" class="container padding-custom" autocomplete="Off">
+                            <input class="form-control" type="text" placeholder="Search forum" name="q" />
+                            <input type="submit">
+                        </div>
                     </div>                    
             </div>
         </div>
