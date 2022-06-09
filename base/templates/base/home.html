@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-lg-8">
                     {% for post in posts %} 
-                        {% include 'base/components/post_component.html' with header=post.header body=post.body followers=followers %}
+                        {% include 'base/components/post_component.html' with post=post followers=followers  %}
                     {% endfor %}
                 </div>
                 <div class="col-lg-4">
