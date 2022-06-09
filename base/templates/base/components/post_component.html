@@ -3,17 +3,26 @@
 <div class="card mb-4-post">
     <div class="card-body">
         <div class="card-text-small"> 
-            <form method="POST" action="" class="card-text-small">
-                {% csrf_token %} 
 
-                {% for i in followers %}                   
-                    {% if i.followed_id == post.user_id %}
-                        <a class="button-following" href="{% url 'deletepost' post.id %}#">Following</a>
-                    {% else %}
-                        <a class="button-not-following" href="{% url 'deletepost' post.id %}#">Not Following</a>
-                    {%  endif %}
-                {% endfor %}
-            </form>
+            {% for i in followers %}                   
+                {% if i.followed_id == post.user_id %}
+                    <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
+                    <form action="{% url 'home' %}" method="POST" class="card-text-small">
+                        {% csrf_token %}                         
+                        <input type="submit" name="unfollow" value="unfollow" class="button-following" >
+                        <input type="hidden" name="followed_id" value="{{i.followed_id}}">
+                    </form>
+                {% else %}
+                    <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
+                    <form action="{% url 'home' %}" method="POST" class="card-text-small">
+                        {% csrf_token %}                         
+                        <input type="submit" name="follow" value="follow" class="button-following" >
+                        <input type="hidden" name="followed_id" value="{{post.user_id}}">
+                    </form>
+                {% endif %}                
+            {% endfor %}
+
+            
             <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
         </div>
         

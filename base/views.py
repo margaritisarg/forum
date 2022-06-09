@@ -1,6 +1,3 @@
-from ast import arg
-from turtle import pos
-from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -44,19 +41,28 @@ def userprofile(request, pk):
     return render(request, 'base/user_profile.html', context)
 
 
+
+
 def home(request):
     posts = searchbar(request)
     username = request.user.username
     user_id = request.user.id 
 
     followers = Follow.objects.filter(follower_id=user_id).values('followed_id', 'follower_id')
-    #followers = followers.filter()
-    print()
-    print(followers)
-    print()
+    followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
 
-    if posts is None:
-        posts = Post.objects.all()
+    if request.method == "POST":
+        if 'unfollow' in request.POST:
+            unfollow_instance = Follow.objects.filter(follower_id=user_id).filter(followed_id=followed_id)
+            unfollow_instance.delete()
+            return redirect('home')
+        if 'follow' in request.POST:
+            follow_instance = Follow.objects.create(followed_id=followed_id, follower_id=user_id)
+            follow_instance.save()
+            return redirect('home')
+
+
+    if posts is None: posts = Post.objects.all()
 
     if username is None or user_id is None:
         username = "NoUserName"
@@ -107,9 +113,6 @@ def commentspost(request, pk):
 
 
 
-
-
-
 @login_required(login_url='login')
 def createpost(request):
     if request.method == "POST":
@@ -138,6 +141,15 @@ def deletepost(request, pk):
 
 
 """
+
+    print()
+    print(f"request method type { request.method }")
+    print(f"follow_binary is : {follow_binary}")
+    
+
+    logging.basicConfig(level=logging.DEBUG, format="%(levelname)s - %(message)s")
+    logging.debug(f"request.method is: {request.method}")
+
 
     level= logging.DEBUG
     fmt = '[%(levelname)s] %(asctime)s - %(message)s'
