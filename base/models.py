@@ -38,9 +38,17 @@ class UserProfile(models.Model):
         return self.description
 
 
+class Testy(models.Model):
+    heyhey = models.TextField
+
+    def __str__(self):
+        return self.heyhey
+
+
 class Follow(models.Model):
     followed = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='followed')
     follower = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='follower')   
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     updated = models.DateTimeField(auto_now=True)    
     created = models.DateTimeField(auto_now_add=True)  
 

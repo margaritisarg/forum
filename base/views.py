@@ -51,6 +51,12 @@ def home(request):
     followers = Follow.objects.filter(follower_id=user_id).values('followed_id', 'follower_id')
     followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
 
+    print("---------------")
+    print()
+    posts = Post.objects.filter(Follow__followed_id=user_id).all()
+    print()
+    print("---------------")
+
     if request.method == "POST":
         if 'unfollow' in request.POST:
             unfollow_instance = Follow.objects.filter(follower_id=user_id).filter(followed_id=followed_id)
@@ -61,7 +67,21 @@ def home(request):
             follow_instance.save()
             return redirect('home')
 
-
+    print()
+    #posts = posts.select_related('follow__followed_id').all()
+    #
+    # Trying to join Post and Follow model into one table. So then I can
+    # easily post.followed_id == user_id in the html. This will stop the
+    # double loop issue
+    #
+    #posts = Post.objects.filter(comment__post_id=3).values('id', 'header')
+    #posts = Post.objects.filter(follow__followed_id=3)
+    #posts = Post.objects.all()
+    #print()
+    #for p in posts:
+    #    print(p.user)
+    #print()
+    
     if posts is None: posts = Post.objects.all()
 
     if username is None or user_id is None:
