@@ -42,8 +42,6 @@ def userprofile(request, pk):
     return render(request, 'base/user_profile.html', context)
 
 
-
-
 def home(request):
     posts = searchbar(request)
     username = request.user.username
@@ -78,17 +76,28 @@ def home(request):
     post_most_comments = Comment.objects.select_related('post').values( 'post_id', 'post__header', ).annotate(comment_count=Count('post_id')).order_by('-post_id')[:1]
     post_most_comments = list(post_most_comments)
 
-    print()
-    print("--------------------------")
-    for i in post_most_comments:
-        i['comment_count'] = str(i['comment_count']) 
-        #print(i['comment_count'], type(i['comment_count']))
-        print(i)
-    print("--------------------------")
-    print()
-
     context = {'posts': posts, 'username': username, 'user_id': user_id, 'followed_list': followed_list, 'user_most_posts': user_most_posts[0], 'post_most_comments': post_most_comments[0]}
     return render(request, 'base/home.html', context)
+
+
+@login_required(login_url='login')
+def followedposts(request):
+    user_id = request.user.id 
+    username = request.user.username
+
+    followers = Follow.objects.filter(follower_id=user_id).values_list('followed_id', flat=True)
+    followed_list = []
+    for i in followers:
+        followed_list.append(i)
+    
+    print()
+    print(followed_list)
+    posts = Post.objects.filter(user_id__in=followed_list)
+    print(posts)
+    print()
+
+    context = {'posts': posts}
+    return render(request, 'base/followed_posts.html', context)
 
 @login_required(login_url='login')
 def myposts(request):
@@ -158,112 +167,3 @@ def deletepost(request, pk):
     return render(request, 'base/deletepost.html', context)
 
 
-
-"""
-
-    print()
-    print(f"request method type { request.method }")
-    print(f"follow_binary is : {follow_binary}")
-    
-
-    logging.basicConfig(level=logging.DEBUG, format="%(levelname)s - %(message)s")
-    logging.debug(f"request.method is: {request.method}")
-
-
-    level= logging.DEBUG
-    fmt = '[%(levelname)s] %(asctime)s - %(message)s'
-    logging.basicConfig(level=level, format=fmt)
-    print()
-    logging.debug(" some debug")
-    logging.info(" some info")
-    logging.error(" some error")
-
-   #all_comments = Comment.objects.filter(post__id=pk).values('id', 'body', 'post_id', 'user_id', 'post__id', 'post__header', 'post__body')
-    #all_comments2 = all_comments.filter(user__id=3).values('id', 'body', 'post_id', 'user_id', 'user__id', 'user__username')
-  
-
-    mylist = []
-    for c in comments:
-        for u in users:
-            mydict = { "comment_id":c['id'], "comment_body":c['body'], "comment_post_id":c['post_id'], "comment_user_id":c['user_id'], "user_id":u['id'], "user_username":u['username'] } 
-
-            mydict[c['id']] = { c['id']: { "comment_body":c['body'], "comment_post_id":c['post_id'], "comment_user_id":c['user_id'], "user_id":u['id'], "user_username":u['username'] } }
-            nested_dict = { 'dictA': {'key_1': 'value_1'},
-                            'dictB': {'key_2': 'value_2'}}
-
-            #print(f"user: {u['id']}, {u['username']}. comment: {comment['id']}, {comment['body']}, {comment['post_id']}, {comment['user_id']}")
-
-            #mylist.append(mydict)
-
-    print(mydict)
-    #for i in mylist:
-    #    print(i)
-    #print(mylist[0]['comment_id'])
-    #mylist = list(dict.fromkeys(mylist[0]['comment_id']))
-    #print(mylist)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    obj = Full_post_comment(comment_id=1, comment_body="test")
-    obj2 = Full_post_comment(comment_id=2, comment_body="test22")
-    mylist = []
-
-    for c in comments:
-        for u in users:
-            if c['user_id'] == u['id']:
-                full_post_instance = Full_post_comment(comment_id=c['id'], comment_body=c['body'], comment_post_id=pk, comment_user_id=u['id'], user_username=u['username'] )
-                mylist.append(full_post_instance)
-
-    print(mylist)
-    print()
-
-
-            #print(f"user: {u['id']}, {u['username']}. comment: {comment['id']}, {comment['body']}, {comment['post_id']}, {comment['user_id']}")
-
-    print()
-    for c in comments:
-        for u in users:
-            if c.user_id == u.id:
-                print(f"user: {u.id}, {u.username}. comment: {comment.id}, {comment.body}, {comment.post_id}, {comment.user_id}")
-    print()
-
-
-    he = Full_post_comment(comment_id=1, comment_body="hey", comment_post_id=2, comment_user_id=3, user_id=3, user_username="Nick")
-    he2 = Full_post_comment(comment_id=12, comment_body="hey222", comment_post_id=22, comment_user_id=32, user_id=32, user_username="Nick222")
-
-    full_post_list.append(he)   
-    full_post_list.append(he2)   
-    for i in full_post_list:
-        print(i.comment_body, i.comment_id)
-
-    #comments_delete = Comment.objects.filter(post_id=15)
-    #comments_delete.delete()
-
-    print()
-    for c in comments:
-        print(c['id'], c['body'], c['post_id'], c['user_id'])
-    print()
-    for c in users:
-        print(c['id'], c['username'])
-    print('-----')
-
-    #users = User.objects.values_list('username', flat=True).filter(Q(comment__user_id=1) & Q(comment__post_id=16))
-    #usersORGINAL = User.objects.filter(Q(comment__post_id=pk))
-    #users = User.objects.filter(comment__user_id=1).all()
-
-    data = Comment.objects.filter(body='Defo Mafia!').values()
- 
-
-"""

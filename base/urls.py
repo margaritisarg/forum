@@ -9,5 +9,6 @@ urlpatterns = [
     path('deletepost/<str:pk>', views.deletepost, name='deletepost'),
     path('commentspost/<str:pk>', views.commentspost, name='commentspost'),
     path('userprofile/<str:pk>', views.userprofile, name='userprofile'),
+    path('followedposts/', views.followedposts, name='followedposts'),
     path('myposts/', views.myposts, name='myposts')
 ]
