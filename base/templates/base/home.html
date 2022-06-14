@@ -13,12 +13,11 @@
                     {% endfor %}
                 </div>
                 <div class="col-lg-4">
-                    {% include 'base/widget_component/widget_body_component.html' with header='Higest rated post' body='Coke VS Pepsi!!??' %}
-                    {% include 'base/widget_component/widget_body_component.html' with header='Trending' body='Sunny or rainy today?' %}
+                    {% include 'base/widget_component/widget_body_component.html' with header='User with the most posts' subject=user_most_posts.user__username count=user_most_posts.post_count %}
+
+                    {% include 'base/widget_component/widget_body_component.html' with header='Most commented post' subject=post_most_comments.post__header count=post_most_comments.comment_count %}
 
                     {% include 'base/widget_component/widget_list_component.html' with header='Top Post' %}
-
-                    {% include 'base/widget_component/widget_body_component.html' with header='Most liked User' body='SunnyJim2323' %}
                 </div>
             </div>
         </div>

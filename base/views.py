@@ -6,7 +6,7 @@ from .models import Post, Comment, UserProfile, Follow
 from .classes.generic_functions import searchbar
 from django.db.models import Q
 import logging
-from itertools import chain
+from django.db.models import Count
 
 def loginPage(request):
     if request.method == "POST":
@@ -72,7 +72,22 @@ def home(request):
         username = "NoUserName"
         user_id = 0
 
-    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followers': followers, 'followed_list': followed_list}
+
+    user_most_posts = Post.objects.select_related('user').values('user_id', 'user__username').annotate(post_count=Count('user_id')).order_by('-post_count')[:1]
+    user_most_posts = list(user_most_posts)
+    post_most_comments = Comment.objects.select_related('post').values( 'post_id', 'post__header', ).annotate(comment_count=Count('post_id')).order_by('-post_id')[:1]
+    post_most_comments = list(post_most_comments)
+
+    print()
+    print("--------------------------")
+    for i in post_most_comments:
+        i['comment_count'] = str(i['comment_count']) 
+        #print(i['comment_count'], type(i['comment_count']))
+        print(i)
+    print("--------------------------")
+    print()
+
+    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followed_list': followed_list, 'user_most_posts': user_most_posts[0], 'post_most_comments': post_most_comments[0]}
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')
