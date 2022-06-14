@@ -4,34 +4,23 @@
     <div class="card-body">
         <div class="card-text-small"> 
 
-                {% for i in followers %}
-                    {% if i.followed_id == post.user_id and i.follower_id == user_id %}
-                        <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
-                        <form action="{% url 'home' %}" method="POST" class="card-text-small">
-                            {% csrf_token %}                         
-                            <input type="submit" name="unfollow" value="unfollow" class="button-following" >
-                            <input type="hidden" name="followed_id" value="{{i.followed_id}}">
-                        </form>
-                    {% else%}
-                    <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
-                    <form action="{% url 'home' %}" method="POST" class="card-text-small">
-                        {% csrf_token %}                         
-                        <input type="submit" name="follow" value="follow" class="button-following" >
-                        <input type="hidden" name="followed_id" value="{{post.user_id}}">
-                    </form>                    
-                    {% endif %}
-
-                {% endfor %}
-            {% if not followers %}
+            {% if post.user_id in followed_list %}
+                <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
+                <form action="{% url 'home' %}" method="POST" class="card-text-small">
+                    {% csrf_token %}                         
+                    <input type="submit" name="unfollow" value="unfollow" class="button-following" >
+                    <input type="hidden" name="followed_id" value="{{post.user_id}}">
+                </form>
+            {% else %}
                 <form action="{% url 'home' %}" method="POST" class="card-text-small"></form>
                 <form action="{% url 'home' %}" method="POST" class="card-text-small">
                     {% csrf_token %}                         
                     <input type="submit" name="follow" value="follow" class="button-following" >
                     <input type="hidden" name="followed_id" value="{{post.user_id}}">
-                </form>
+                </form>                    
             {% endif %}
 
-            <h1> {{post.followed_id}} </h1>
+        <h1> {{post.followed_id}} </h1>
         <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
         </div>
         

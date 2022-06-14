@@ -6,6 +6,7 @@ from .models import Post, Comment, UserProfile, Follow
 from .classes.generic_functions import searchbar
 from django.db.models import Q
 import logging
+from itertools import chain
 
 def loginPage(request):
     if request.method == "POST":
@@ -48,14 +49,12 @@ def home(request):
     username = request.user.username
     user_id = request.user.id 
 
-    followers = Follow.objects.filter(follower_id=user_id).values('followed_id', 'follower_id')
+    followers = Follow.objects.filter(follower_id=user_id).values_list('followed_id', flat=True)
     followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
 
-    print("---------------")
-    print()
-    posts = Post.objects.filter(Follow__followed_id=user_id).all()
-    print()
-    print("---------------")
+    followed_list = []
+    for i in followers:
+        followed_list.append(i)
 
     if request.method == "POST":
         if 'unfollow' in request.POST:
@@ -66,21 +65,6 @@ def home(request):
             follow_instance = Follow.objects.create(followed_id=followed_id, follower_id=user_id)
             follow_instance.save()
             return redirect('home')
-
-    print()
-    #posts = posts.select_related('follow__followed_id').all()
-    #
-    # Trying to join Post and Follow model into one table. So then I can
-    # easily post.followed_id == user_id in the html. This will stop the
-    # double loop issue
-    #
-    #posts = Post.objects.filter(comment__post_id=3).values('id', 'header')
-    #posts = Post.objects.filter(follow__followed_id=3)
-    #posts = Post.objects.all()
-    #print()
-    #for p in posts:
-    #    print(p.user)
-    #print()
     
     if posts is None: posts = Post.objects.all()
 
@@ -88,7 +72,7 @@ def home(request):
         username = "NoUserName"
         user_id = 0
 
-    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followers': followers}
+    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followers': followers, 'followed_list': followed_list}
     return render(request, 'base/home.html', context)
 
 @login_required(login_url='login')
