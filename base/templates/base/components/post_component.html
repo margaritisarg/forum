@@ -4,22 +4,8 @@
     <div class="card-body">
         <div class="card-text-small"> 
 
-            {% if post.user_id in followed_list %}
-                <form action="{% url 'home' %}" method="POST" class="card-text-small unset-all"></form>
-                <form action="{% url 'home' %}" method="POST" class="card-text-small unset-all">
-                    {% csrf_token %}                         
-                    <input type="submit" name="unfollow" value="unfollow" class="button-following" >
-                    <input type="hidden" name="followed_id" value="{{post.user_id}}">
-                </form>
-            {% else %}
-                <form action="{% url 'home' %}" method="POST" class="card-text-small unset-all"></form>
-                <form action="{% url 'home' %}" method="POST" class="card-text-small unset-all">
-                    {% csrf_token %}                         
-                    <input type="submit" name="follow" value="follow" class="button-following" >
-                    <input type="hidden" name="followed_id" value="{{post.user_id}}">
-                </form>                    
-            {% endif %}
-
+        {% include 'base/components/follow_unfollow_component.html' with post_user_id=post.user_id followed_list=followed_list %}
+                    
         <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
         </div>
         

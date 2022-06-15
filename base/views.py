@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
-from .classes.generic_functions import searchbar
+from .classes.generic_functions import searchbar, getFollowedList
 from django.db.models import Q
 import logging
 from django.db.models import Count
@@ -47,12 +47,9 @@ def home(request):
     username = request.user.username
     user_id = request.user.id 
 
-    followers = Follow.objects.filter(follower_id=user_id).values_list('followed_id', flat=True)
-    followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
+    followed_list = getFollowedList(request.user.id)
 
-    followed_list = []
-    for i in followers:
-        followed_list.append(i)
+    followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
 
     if request.method == "POST":
         if 'unfollow' in request.POST:
