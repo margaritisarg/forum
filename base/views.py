@@ -3,10 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, UserProfile, Follow
-from .classes.generic_functions import searchbar, getFollowedList
-from django.db.models import Q
+from .classes.generic_functions import searchbar, getFollowedList, userWithMostPosts, postsWithMostComments
 import logging
-from django.db.models import Count
 
 def loginPage(request):
     if request.method == "POST":
@@ -44,36 +42,25 @@ def userprofile(request, pk):
 
 def home(request):
     posts = searchbar(request)
-    username = request.user.username
-    user_id = request.user.id 
-
-    followed_list = getFollowedList(request.user.id)
-
+    
     followed_id = request.POST.get('followed_id') if request.POST.get('followed_id') != None else ''
 
     if request.method == "POST":
         if 'unfollow' in request.POST:
-            unfollow_instance = Follow.objects.filter(follower_id=user_id).filter(followed_id=followed_id)
+            unfollow_instance = Follow.objects.filter(follower_id=request.user.id).filter(followed_id=followed_id)
             unfollow_instance.delete()
             return redirect('home')
         if 'follow' in request.POST:
-            follow_instance = Follow.objects.create(followed_id=followed_id, follower_id=user_id)
+            follow_instance = Follow.objects.create(followed_id=followed_id, follower_id=request.user.id)
             follow_instance.save()
             return redirect('home')
     
-    if posts is None: posts = Post.objects.all()
 
-    if username is None or user_id is None:
-        username = "NoUserName"
-        user_id = 0
+    followed_list = getFollowedList(request.user.id)
+    user_most_posts = userWithMostPosts()
+    post_most_comments = postsWithMostComments()
 
-
-    user_most_posts = Post.objects.select_related('user').values('user_id', 'user__username').annotate(post_count=Count('user_id')).order_by('-post_count')[:1]
-    user_most_posts = list(user_most_posts)
-    post_most_comments = Comment.objects.select_related('post').values( 'post_id', 'post__header', ).annotate(comment_count=Count('post_id')).order_by('-post_id')[:1]
-    post_most_comments = list(post_most_comments)
-
-    context = {'posts': posts, 'username': username, 'user_id': user_id, 'followed_list': followed_list, 'user_most_posts': user_most_posts[0], 'post_most_comments': post_most_comments[0]}
+    context = {'posts': posts, 'followed_list': followed_list, 'user_most_posts': user_most_posts, 'post_most_comments': post_most_comments}
     return render(request, 'base/home.html', context)
 
 
