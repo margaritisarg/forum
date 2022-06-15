@@ -635,8 +635,8 @@ progress {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 5rem);
-  padding-left: var(--bs-gutter-x, 5rem);
+  padding-right: var(--bs-gutter-x, 7rem);
+  padding-left: var(--bs-gutter-x, 7rem);
   margin-right: auto;
   margin-left: auto;
 }
@@ -2194,7 +2194,7 @@ progress {
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
-  background-color:#EFF2F5;
+  background-color:#EFF6F6;
   background-clip: padding-box;
   border: 1px solid #EFF6F6;
   -webkit-appearance: none;
@@ -4573,14 +4573,14 @@ textarea.form-control-lg {
 
 .card-text-body-custom{
   margin-bottom: 0;
-  padding: 1rem 0.5rem;
-  color: black;
+  padding-bottom: 0.5rem;
+  color: rgb(139, 136, 136);
   text-align: center;
 }
 
 .card-text-small {
   margin-bottom: 0;
-  font-size: 0.875em;
+  font-size: 0.9em;
   color: #ababab;
 }
 
@@ -4593,8 +4593,8 @@ textarea.form-control-lg {
   margin-top: 0.5rem;
   border-radius: 5px;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  background-color: rgba(0, 0, 0, 0.00);
+  border-top: 0.1px solid rgba(0, 0, 0, 0.125);
   font-weight: 600;
   text-align: center;
   font-size: 1.25rem;
@@ -7891,6 +7891,7 @@ textarea.form-control-lg {
 .bg-light {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
+  background-color: white !important;
 }
 
 .bg-dark {

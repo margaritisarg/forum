@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container margin-top">
     {% if posts is not None %}
         {% for post in posts %}
             {% include 'base/components/post_component.html' with comments_list=comments_list %}
