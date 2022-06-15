@@ -6,7 +6,7 @@
 
         {% include 'base/components/follow_unfollow_component.html' with post_user_id=post.user_id followed_list=followed_list %}
                     
-        <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user}}</a> - {{post.created | timesince}}           
+        <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user | title}}</a> - {{post.created | timesince}}           
         </div>
         
         <div class="card-header">{{post.header}} </div>

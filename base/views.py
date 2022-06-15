@@ -53,8 +53,7 @@ def home(request):
         if 'follow' in request.POST:
             follow_instance = Follow.objects.create(followed_id=followed_id, follower_id=request.user.id)
             follow_instance.save()
-            return redirect('home')
-    
+            return redirect('home')  
 
     followed_list = getFollowedList(request.user.id)
     user_most_posts = userWithMostPosts()
@@ -66,30 +65,18 @@ def home(request):
 
 @login_required(login_url='login')
 def followedposts(request):
-    user_id = request.user.id 
-    username = request.user.username
 
-    followers = Follow.objects.filter(follower_id=user_id).values_list('followed_id', flat=True)
-    followed_list = []
-    for i in followers:
-        followed_list.append(i)
-    
-    print()
-    print(followed_list)
+    followed_list = getFollowedList(request.user.id)   
     posts = Post.objects.filter(user_id__in=followed_list)
-    print(posts)
-    print()
 
-    context = {'posts': posts}
+    context = {'posts': posts, 'followed_list':followed_list}
     return render(request, 'base/followed_posts.html', context)
 
 @login_required(login_url='login')
 def myposts(request):
-    user_id = request.user.id 
-    username = request.user.username
 
-    results_list = Post.objects.filter(user=user_id)
-    context = {'user_id': user_id, 'username': username, 'posts': results_list}
+    results_list = Post.objects.filter(user=request.user.id )
+    context = {'posts': results_list}
 
     return render(request, 'base/myposts.html', context)
 
@@ -128,10 +115,9 @@ def commentspost(request, pk):
 @login_required(login_url='login')
 def createpost(request):
     if request.method == "POST":
-        user_id = request.user.id 
-        header, body = request.POST["header"], request.POST["body"]
-        
-        post_instance = Post.objects.create(header=header, body=body, user_id=user_id)
+
+        header, body = request.POST["header"], request.POST["body"] 
+        post_instance = Post.objects.create(header=header, body=body, user_id=request.user.id )
         post_instance.save()
 
         return redirect('myposts')

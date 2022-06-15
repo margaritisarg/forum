@@ -12,7 +12,7 @@
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">logout</a></li>
                     <li class="nav-item"><span class="nav-link" href=""> |</span></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'myposts' %}"> {{user.username}} </a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'myposts' %}"> {{user.username | title}} </a></li>
                 {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">login</a></li>
                 {% endif %}
