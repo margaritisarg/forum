@@ -22,9 +22,15 @@ def getFollowedList(user_id):
 def userWithMostPosts():
     user_most_posts = Post.objects.select_related('user').values('user_id', 'user__username').annotate(post_count=Count('user_id')).order_by('-post_count')[:1]
     user_most_posts = list(user_most_posts)
-    return user_most_posts[0]
+    if user_most_posts:
+        return user_most_posts[0]
+    else:
+        return None
 
 def postsWithMostComments():
     post_most_comments = Comment.objects.select_related('post').values( 'post_id', 'post__header', ).annotate(comment_count=Count('post_id')).order_by('-comment_count')[:1]
     post_most_comments = list(post_most_comments)
-    return post_most_comments[0]
+    if post_most_comments:
+        return post_most_comments[0]
+    else:
+        return None
