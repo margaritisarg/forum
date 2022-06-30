@@ -188,3 +188,8 @@
 .margin-bottom{
   margin-top: 20px;
 }
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}

@@ -4,8 +4,10 @@
             <div class="card mb-4">                        
                     <div class="input-group">
                         <form action="{% url 'home' %}" method="GET" class="search-bar-custom" autocomplete="Off">
-                            <input class="form-control" type="text" placeholder="Search forum" name="q" />
-                            <input type="submit" class="hide-submit-button">
+                            <div class="wrapper">
+                                <input class="form-control" type="text" placeholder="Search forum" name="q"/>
+                                <input type="submit" class="button-6-custom">
+                            </div>
                         </div>
                     </div>                    
             </div>
