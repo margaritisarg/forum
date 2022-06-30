@@ -8,8 +8,8 @@ import logging
 
 def loginPage(request):
     if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username').lower()
+        password = request.POST.get('password').lower()
 
         try:
             user = User.objects.get(username = username)
