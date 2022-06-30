@@ -4,8 +4,9 @@
     <div class="card-body">
         <div class="card-text-small"> 
 
+        {% if request.user.id %}
         {% include 'base/components/follow_unfollow_component.html' with post_user_id=post.user_id followed_list=followed_list %}
-                    
+        {% endif %}
         <a class="card-text-small" href="{% url 'userprofile' post.user_id %}#">{{post.user | title}}</a> - {{post.created | timesince}}           
         </div>
         

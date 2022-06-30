@@ -635,11 +635,21 @@ progress {
 .container-md,
 .container-sm {
   width: 100%;
-  padding-right: var(--bs-gutter-x, 7rem);
-  padding-left: var(--bs-gutter-x, 7rem);
+  padding-right: var(--bs-gutter-x, 2rem);
+  padding-left: var(--bs-gutter-x, 2rem);
   margin-right: auto;
   margin-left: auto;
 }
+
+@media (min-width: 359px) {
+  .container-sm, .container {
+    max-width: 339px;
+  }
+
+@media (min-width: 361px) {
+  .container-sm, .container {
+    max-width: 341px;
+  }
 
 @media (min-width: 576px) {
   .container-sm, .container {
