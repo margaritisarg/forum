@@ -21,16 +21,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# First secret key for development
-SECRET_KEY = 'django-insecure-rdr&u7(8^^0fa8#xg*5vh168-_^4k2w8t^=fs#%-zygnvsmo#z'
-# Second secret key for productio
-#SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+#SECRET_KEY = 'django-insecure-rdr&u7(8^^0fa8#xg*5vh168-_^4k2w8t^=fs#%-zygnvsmo#z'
+SECRET_KEY = os.environ.get('FORUM_SECRET_KEY')
+# FORUM_SECRET_KEY="3b10285e3a901e19d0d6eae7cbba9a1233aad0031be457ee"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 #Debug true for development but False for production
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['forumforum.herokuapp.com']
 
 
 # Application definition
